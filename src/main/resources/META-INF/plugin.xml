@@ -17,7 +17,7 @@
                                  displayName="GPT 4"/>
         <applicationConfigurable parentId="com.didalgo.chatgpt.settings.OpenAISettings" instance="com.didalgo.intellij.chatgpt.settings.GPT35TurboPanel"
                                  id="com.didalgo.chatgpt.settings.GPT3-3.5-Turbo"
-                                 displayName="GPT 3.5 Turbo"/>
+                                 displayName="GPT 4 Mini"/>
         <applicationConfigurable parentId="com.didalgo.chatgpt.settings.OpenAISettings" instance="com.didalgo.intellij.chatgpt.settings.AzureOpenAiPanel"
                                  id="com.didalgo.chatgpt.settings.AzureOpenAi"
                                  displayName="Azure OpenAI"/>

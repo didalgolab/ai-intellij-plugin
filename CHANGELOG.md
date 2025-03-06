@@ -1,6 +1,7 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 ## [Unreleased]
++ Added support for `Claude 3.7` model
 
 ## [1.2.0]
 + Renamed plugin name from `ChatGPT Integration` to `AI Integration`

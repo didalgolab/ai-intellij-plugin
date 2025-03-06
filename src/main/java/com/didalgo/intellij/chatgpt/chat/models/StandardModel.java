@@ -13,7 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 public enum StandardModel implements ModelType {
-    CLAUDE_3_5_SONNET("claude-3-5-sonnet-20240620", ModelFamily.ANTHROPIC, 200000),
+    CLAUDE_3_7_SONNET("claude-3-7-sonnet-latest", ModelFamily.ANTHROPIC, 200000),
+    CLAUDE_3_7_SONNET_20250219("claude-3-7-sonnet-20250219", ModelFamily.ANTHROPIC, 200000),
+    CLAUDE_3_5_SONNET("claude-3-5-sonnet-latest", ModelFamily.ANTHROPIC, 200000),
+    CLAUDE_3_5_SONNET_20241022("claude-3-5-sonnet-20241022", ModelFamily.ANTHROPIC, 200000),
+    CLAUDE_3_5_SONNET_20240620("claude-3-5-sonnet-20240620", ModelFamily.ANTHROPIC, 200000),
     CLAUDE_3_OPUS("claude-3-opus-20240229", ModelFamily.ANTHROPIC, 200000),
     CLAUDE_3_SONNET("claude-3-sonnet-20240229", ModelFamily.ANTHROPIC, 200000),
     CLAUDE_3_HAIKU("claude-3-haiku-20240307", ModelFamily.ANTHROPIC, 200000),
