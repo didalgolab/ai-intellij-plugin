@@ -15,28 +15,28 @@ public class MessageSupport {
     private static final String ELLIPSIS = "[...]";
 
     public static Message substring(Message message, int fromIndex) {
-        return setContent(message, ELLIPSIS + " " + message.getContent().substring(fromIndex));
+        return setTextContent(message, ELLIPSIS + " " + message.getText().substring(fromIndex));
     }
 
     /**
-     * Sets new content to a given {@link Message} and returns a new instance of the message with updated content.
-     * This method supports updating content for {@link UserMessage}, {@link SystemMessage}, and {@link AssistantMessage}.
+     * Sets new textContent to a given {@link Message} and returns a new instance of the message with updated textContent.
+     * This method supports updating textContent for {@link UserMessage}, {@link SystemMessage}, and {@link AssistantMessage}.
      * It preserves other properties of the message, such as media and metadata, where applicable.
      *
-     * @param message The original message object whose content is to be updated. This object is not modified.
-     * @param content The new content string to be set in the message.
-     * @return A new instance of the message with the updated content. The specific type of the returned message
+     * @param message The original message object whose textContent is to be updated. This object is not modified.
+     * @param textContent The new textContent string to be set in the message.
+     * @return A new instance of the message with the updated textContent. The specific type of the returned message
      *         corresponds to the type of the input message.
      * @throws IllegalArgumentException If the input message type is not supported by this method, an exception
      *                                  is thrown indicating the unsupported message type.
      */
-    public static Message setContent(Message message, String content) {
+    public static Message setTextContent(Message message, String textContent) {
         if (message instanceof UserMessage userMessage) {
-            return new UserMessage(content, userMessage.getMedia(), userMessage.getMetadata());
+            return new UserMessage(textContent, userMessage.getMedia(), userMessage.getMetadata());
         } else if (message instanceof SystemMessage) {
-            return new SystemMessage(content);
+            return new SystemMessage(textContent);
         } else if (message instanceof AssistantMessage) {
-            return new AssistantMessage(content, message.getMetadata());
+            return new AssistantMessage(textContent, message.getMetadata());
         } else if (message instanceof ToolResponseMessage toolMessage) {
             return new ToolResponseMessage(toolMessage.getResponses(), toolMessage.getMetadata());
         } else {

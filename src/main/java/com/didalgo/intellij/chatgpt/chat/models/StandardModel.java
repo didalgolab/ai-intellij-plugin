@@ -5,7 +5,6 @@
 package com.didalgo.intellij.chatgpt.chat.models;
 
 import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.chat.prompt.ChatOptionsBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +62,7 @@ public enum StandardModel implements ModelType {
     private final ChatOptions incompatibleChatOptionsOverride;
 
     StandardModel(String id, ModelFamily family, int inputTokenLimit) {
-        this(id, family, inputTokenLimit, true, true, OVERRIDE_NONE);
+        this(id, family, inputTokenLimit, true, true, false, OVERRIDE_NONE);
     }
 
     StandardModel(String id, ModelFamily family, int inputTokenLimit, boolean supportsStreaming, boolean supportsSystemMessage, ChatOptions incompatibleChatOptionsOverride) {
@@ -137,9 +136,9 @@ public enum StandardModel implements ModelType {
 
     private static final class IncompatibleChatOptions {
 
-        private static final ChatOptions O1_OVERRIDE = ChatOptionsBuilder.builder()
-                .withTemperature(1.0)
-                .withTopP(1.0)
+        private static final ChatOptions O1_OVERRIDE = ChatOptions.builder()
+                .temperature(1.0)
+                .topP(1.0)
                 .build();
     }
 }

@@ -20,11 +20,11 @@ public class OpenAiModelFamily implements ModelFamily {
         var apiKey = config.getApiKey();
         var api = new OpenAiApi(baseUrl, apiKey);
         var options = OpenAiChatOptions.builder()
-                .withModel(config.getModelName())
-                .withTemperature(config.getTemperature())
-                .withStreamUsage(config.isEnableStreamOptions())
-                .withTopP(config.getTopP())
-                .withN(1)
+                .model(config.getModelName())
+                .temperature(config.getTemperature())
+                .streamUsage(config.isEnableStreamOptions())
+                .topP(config.getTopP())
+                .N(1)
                 .build();
         return new OpenAiChatModel(api, options);
     }

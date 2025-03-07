@@ -63,10 +63,10 @@ public class ChatMessageUtils {
     @SuppressWarnings("StringEquality")
     public static void substitutePlaceholders(List<Message> chatMessages, TextSubstitutor substitutor) {
         chatMessages.replaceAll(chatMessage -> {
-            String template = chatMessage.getContent();
+            String template = chatMessage.getText();
             String resolved = substitutor.resolvePlaceholders(template);
             if (resolved != template) {
-                chatMessage = MessageSupport.setContent(chatMessage, resolved);
+                chatMessage = MessageSupport.setTextContent(chatMessage, resolved);
             }
             return chatMessage;
         });
@@ -75,11 +75,11 @@ public class ChatMessageUtils {
     public static int countTokens(List<Message> messages, GPT3Tokenizer tokenizer, ChatFormatDescriptor formatDescriptor) {
         return TokenCount.fromMessages(messages, TokenizableMessage.from(
                 message -> message.getMessageType().getValue(),
-                Message::getContent,
+                Message::getText,
                 __ -> "",
                 message -> (message.getMessageType() != MessageType.TOOL)
                         ? TokenizableFunctionCall.NONE
-                        : TokenizableFunctionCall.of(message.getContent(), message.getMetadata().toString())
+                        : TokenizableFunctionCall.of(message.getText(), message.getMetadata().toString())
         ), List.of(), __ -> { throw new UnsupportedOperationException("Tokenization of functions is not supported"); }, formatDescriptor, tokenizer);
     }
 }

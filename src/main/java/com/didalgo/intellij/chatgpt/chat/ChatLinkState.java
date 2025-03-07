@@ -160,7 +160,7 @@ public class ChatLinkState implements ConversationContext {
         if (tokenCount > tokenLimit) {
             var lastMessage = messages.get(oldestMessageIndex);
             // TODO: calculation is currently wrong
-            var lastMsgCutoff = lastMessage.getContent().length() - tokenLimit;
+            var lastMsgCutoff = lastMessage.getText().length() - tokenLimit;
             if (lastMsgCutoff > 0)
                 messages.set(oldestMessageIndex,
                         MessageSupport.substring(lastMessage, lastMsgCutoff));

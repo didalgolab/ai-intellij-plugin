@@ -7,11 +7,10 @@ package com.didalgo.intellij.chatgpt.chat.models;
 import com.didalgo.gpt3.ChatFormatDescriptor;
 import com.didalgo.gpt3.GPT3Tokenizer;
 import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.chat.prompt.ChatOptionsBuilder;
 
 public interface ModelType {
 
-    ChatOptions OVERRIDE_NONE = ChatOptionsBuilder.builder().build();
+    ChatOptions OVERRIDE_NONE = ChatOptions.builder().build();
 
     String id();
 

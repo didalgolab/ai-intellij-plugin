@@ -18,27 +18,27 @@ public class ChatResponseMetadataBuilder implements Consumer<ChatResponseMetadat
     @Override
     public void accept(ChatResponseMetadata metadata) {
         for (Map.Entry<String, Object> e : metadata.entrySet()) {
-            builder.withKeyValue(e.getKey(), e.getValue());
+            builder.keyValue(e.getKey(), e.getValue());
         }
         if (!metadata.getId().isEmpty()) {
-            builder.withId(metadata.getId());
+            builder.id(metadata.getId());
         }
         if (!metadata.getModel().isEmpty()) {
-            builder.withModel(metadata.getModel());
+            builder.model(metadata.getModel());
         }
 
         usageAggregator.accept(metadata.getUsage());
         if (metadata.getPromptMetadata().iterator().hasNext()) {
-            builder.withPromptMetadata(metadata.getPromptMetadata());
+            builder.promptMetadata(metadata.getPromptMetadata());
         }
         if (!(metadata.getRateLimit() instanceof EmptyRateLimit)) {
-            builder.withRateLimit(metadata.getRateLimit());
+            builder.rateLimit(metadata.getRateLimit());
         }
     }
 
     public ChatResponseMetadata build() {
         return builder
-                .withUsage(usageAggregator.toImmutableUsage())
+                .usage(usageAggregator.toImmutableUsage())
                 .build();
     }
 }

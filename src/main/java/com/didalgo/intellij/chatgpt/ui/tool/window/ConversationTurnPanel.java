@@ -100,7 +100,7 @@ public class ConversationTurnPanel extends JBPanel<ConversationTurnPanel> {
     }
 
     public TextFragment getMessageText() {
-        return TextFragment.of(message.getContent());
+        return TextFragment.of(message.getText());
     }
 
     public String toDisplayText(TextFragment text, boolean fromUser) {
@@ -145,7 +145,7 @@ public class ConversationTurnPanel extends JBPanel<ConversationTurnPanel> {
     }
 
     public MessagePanel createMessagePanel(Message message, boolean fromUser) {
-        TextFragment content = TextFragment.of(message.getContent());
+        TextFragment content = TextFragment.of(message.getText());
 
         MessageTextPanel messagePanel = new MessageTextPanel(message.getMessageType() == MessageType.USER);
         messagePanel.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, java.lang.Boolean.TRUE);

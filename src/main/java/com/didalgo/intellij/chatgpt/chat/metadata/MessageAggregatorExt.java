@@ -56,8 +56,8 @@ public class MessageAggregatorExt extends MessageAggregator {
 		}).doOnNext(chatResponse -> {
 			// logger.info("Aggregation Next:" + chatResponse);
 			if (chatResponse.getResult() != null) {
-				if (chatResponse.getResult().getOutput().getContent() != null) {
-					stringBufferRef.get().append(chatResponse.getResult().getOutput().getContent());
+				if (chatResponse.getResult().getOutput().getText() != null) {
+					stringBufferRef.get().append(chatResponse.getResult().getOutput().getText());
 				}
 				if (chatResponse.getResult().getOutput().getMetadata() != null) {
 					mapRef.get().putAll(chatResponse.getResult().getOutput().getMetadata());

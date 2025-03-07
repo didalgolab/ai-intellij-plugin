@@ -57,7 +57,7 @@ public class ChatLinkService extends AbstractChatLink {
         List<TextContent> mergedCtx = mergeContext(textContents, inputContext);
         List<Media> mediaList = getMediaAttachments(inputContext);
         UserMessage message = composer.compose(conversationContext, prompt, mergedCtx, mediaList);
-        if (message.getContent().isEmpty()) {
+        if (message.getText().isEmpty()) {
             return;
         }
 

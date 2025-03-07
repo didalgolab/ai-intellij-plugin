@@ -10,7 +10,7 @@ import org.springframework.ai.chat.metadata.Usage;
 /**
  * Immutable implementation of {@link Usage}.
  */
-public record ImmutableUsage(Long getPromptTokens, Long getGenerationTokens) implements Usage {
+public record ImmutableUsage(Integer getPromptTokens, Integer getCompletionTokens, Object getNativeUsage) implements Usage {
 
     private static final Usage EMPTY_USAGE = new EmptyUsage();
 

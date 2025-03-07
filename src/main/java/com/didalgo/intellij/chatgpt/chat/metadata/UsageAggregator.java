@@ -19,50 +19,55 @@ public class UsageAggregator implements Usage, Consumer<Usage> {
     /**
      *  The number of prompt tokens.
      */
-    private long promptTokens;
+    private int promptTokens;
 
     /**
      *  The number of generation tokens.
      */
-    private long generationTokens;
+    private int completionTokens;
 
     /**
      * Creates a new {@code UsageAggregator} with zero prompt and generation tokens.
      */
     public UsageAggregator() {
-        this(0L, 0L);
+        this(0, 0);
     }
 
     /**
      * Creates a new {@code UsageAggregator} with the given prompt and generation tokens.
      *
      * @param promptTokens        the number of prompt tokens
-     * @param generationTokens    the number of generation tokens
+     * @param completionTokens    the number of generation tokens
      */
-    public UsageAggregator(Long promptTokens, Long generationTokens) {
+    public UsageAggregator(int promptTokens, int completionTokens) {
         this.promptTokens = promptTokens;
-        this.generationTokens = generationTokens;
+        this.completionTokens = completionTokens;
     }
 
     @Override
-    public Long getPromptTokens() {
+    public Integer getPromptTokens() {
         return promptTokens;
     }
 
     @Override
-    public Long getGenerationTokens() {
-        return generationTokens;
+    public Integer getCompletionTokens() {
+        return completionTokens;
+    }
+
+    @Override
+    public Object getNativeUsage() {
+        return null;
     }
 
     @Override
     public void accept(@Nullable Usage source) {
         if (source != null) {
             setPromptTokens(getMaxOrDefault(getPromptTokens(), source.getPromptTokens()));
-            setGenerationTokens(getMaxOrDefault(getGenerationTokens(), source.getGenerationTokens()));
+            setCompletionTokens(getMaxOrDefault(getCompletionTokens(), source.getCompletionTokens()));
         }
     }
 
-    private static long getMaxOrDefault(long first, @Nullable Long second) {
+    private static int getMaxOrDefault(int first, @Nullable Integer second) {
         return second != null ? Math.max(first, second) : first;
     }
 
@@ -72,6 +77,6 @@ public class UsageAggregator implements Usage, Consumer<Usage> {
      * @return the immutable copy
      */
     public ImmutableUsage toImmutableUsage() {
-        return new ImmutableUsage(promptTokens, generationTokens);
+        return new ImmutableUsage(promptTokens, completionTokens, null);
     }
 }

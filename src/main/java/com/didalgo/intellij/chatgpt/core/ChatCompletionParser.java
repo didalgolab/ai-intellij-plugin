@@ -18,7 +18,7 @@ public class ChatCompletionParser {
             assistantMessage = new AssistantMessage("");
         }
 
-        TextFragment parseResult = TextFragment.of(assistantMessage.getContent());
+        TextFragment parseResult = TextFragment.of(assistantMessage.getText());
         parseResult.toHtml(); // pre-compute and cache HTML content in the current thread
         return parseResult;
     }

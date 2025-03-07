@@ -57,7 +57,7 @@ public class UsagePanel extends JPanel {
                 ChatGptBundle.message(
                         (inputTokenLimit == Integer.MAX_VALUE) ? "usage.in.out" : "usage.in.out.max",
                         usage.getPromptTokens(),
-                        usage.getGenerationTokens(),
+                        usage.getCompletionTokens(),
                         inputTokenLimit
                 )
         );

@@ -100,7 +100,7 @@ public class BrowserContent implements ChatLinkProvider {
 
         @Override
         public Disposable push(ConversationContext ctx, ChatMessageEvent.Starting event, ChatMessageListener listener) {
-            handleUserInput(event.getUserMessage().getContent());
+            handleUserInput(event.getUserMessage().getText());
             return Disposables.never();
         }
     }

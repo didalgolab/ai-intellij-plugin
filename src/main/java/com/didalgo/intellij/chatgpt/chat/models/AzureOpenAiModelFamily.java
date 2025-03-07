@@ -22,10 +22,10 @@ public class AzureOpenAiModelFamily implements ModelFamily {
         var api = new OpenAIClientBuilder().credential(new AzureKeyCredential(apiKey))
                 .endpoint(baseUrl);
         var options = AzureOpenAiChatOptions.builder()
-                .withDeploymentName(config.getAzureDeploymentName())
-                .withTemperature(config.getTemperature())
-                .withTopP(config.getTopP())
-                .withN(1)
+                .deploymentName(config.getAzureDeploymentName())
+                .temperature(config.getTemperature())
+                .topP(config.getTopP())
+                .N(1)
                 .build();
 
         return new AzureOpenAiChatModel(api, options);

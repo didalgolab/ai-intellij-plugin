@@ -4,30 +4,41 @@
  */
 package com.didalgo.intellij.chatgpt.chat.models;
 
-import com.didalgo.ai.gemini.GeminiChatModel;
-import com.didalgo.ai.gemini.GeminiChatOptions;
-import com.didalgo.ai.gemini.api.GeminiApi;
 import com.didalgo.intellij.chatgpt.settings.GeneralSettings;
+import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
 
 public class GeminiModelFamily implements ModelFamily {
 
+    private static final String DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai";
+
     @Override
-    public GeminiChatModel createChatModel(GeneralSettings.AssistantOptions config) {
+    public OpenAiChatModel createChatModel(GeneralSettings.AssistantOptions config) {
         var baseUrl = config.isEnableCustomApiEndpointUrl()? config.getApiEndpointUrl(): getDefaultApiEndpointUrl();
-        var apiKey = config.getApiKey();
-        var api = new GeminiApi(baseUrl, apiKey);
-        var options = GeminiChatOptions.builder()
-                .withSafetySettings(GeminiApi.SafetySettings.BLOCK_ONLY_HIGH)
-                .withModel(config.getModelName())
-                .withTemperature(config.getTemperature())
-                .withTopP(config.getTopP())
+        if ("https://generativelanguage.googleapis.com".equals(baseUrl)) {
+            baseUrl = DEFAULT_BASE_URL;
+        }
+
+        var api = OpenAiApi.builder()
+                .baseUrl(baseUrl)
+                .completionsPath("/chat/completions")
+                .embeddingsPath("/embeddings")
+                .apiKey(config.getApiKey())
                 .build();
-        return new GeminiChatModel(api, options);
+        var options = OpenAiChatOptions.builder()
+                .model(config.getModelName())
+                .temperature(config.getTemperature())
+                //.withStreamUsage(config.isEnableStreamOptions())
+                .topP(config.getTopP())
+                .N(1)
+                .build();
+        return new OpenAiChatModel(api, options);
     }
 
     @Override
     public String getDefaultApiEndpointUrl() {
-        return GeminiApi.DEFAULT_BASE_URL;
+        return DEFAULT_BASE_URL;
     }
 
     @Override

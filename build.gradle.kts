@@ -36,15 +36,13 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.26")
     implementation("com.didalgo:gpt3-tokenizer:0.1.7")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.16.1") // to remove after class detection fix in Spring
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.16.1") // to remove after class detection fix in Spring
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1") // to remove after class detection fix in Spring
     implementation("com.fifesoft:rsyntaxtextarea:3.3.3")
     implementation("com.vladsch.flexmark:flexmark:0.64.8")
     implementation("com.vladsch.flexmark:flexmark-ext-tables:0.64.8")
     implementation("com.vladsch.flexmark:flexmark-html2md-converter:0.64.8")
     implementation("org.projectlombok:lombok:1.18.26")
-    implementation("com.didalgo.ai:spring-ai-gemini:1.0.0-M3") {
-        exclude(group = "io.rest-assured", module = "json-path")
-    }
     implementation("org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-SNAPSHOT") {
         exclude(group = "io.rest-assured", module = "json-path")
     }

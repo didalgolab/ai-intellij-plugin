@@ -32,7 +32,7 @@ import com.intellij.util.ui.UIUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.ai.chat.prompt.ChatOptionsBuilder;
+import org.springframework.ai.chat.prompt.ChatOptions;
 import org.springframework.ai.chat.prompt.Prompt;
 
 import javax.swing.*;
@@ -408,9 +408,9 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
     }
 
     private Prompt getTestConnectionPrompt() {
-        return new Prompt("Say: hello", ChatOptionsBuilder.builder()
-                .withTemperature(1.0)
-                .withTopP(1.0)
+        return new Prompt("Say: hello", ChatOptions.builder()
+                .temperature(1.0)
+                .topP(1.0)
                 .build());
     }
 

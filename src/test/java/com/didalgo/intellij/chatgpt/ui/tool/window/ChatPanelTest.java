@@ -19,6 +19,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.Mockito;
 import org.opentest4j.AssertionFailedError;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.model.Generation;
@@ -49,8 +50,8 @@ class ChatPanelTest {
     void can_converse_with_api(AssistantType.System type) throws Throwable {
         when(chatModel.stream(any(Prompt.class)))
                 .thenReturn(Flux.just(
-                        new ChatResponse(List.of(new Generation("some"))),
-                        new ChatResponse(List.of(new Generation("thing")))));
+                        new ChatResponse(List.of(new Generation(new AssistantMessage("some")))),
+                        new ChatResponse(List.of(new Generation(new AssistantMessage("thing"))))));
 
         var chatPanel = aChatPanel(type);
         aUserMessage(chatPanel, "Say something");
@@ -76,7 +77,7 @@ class ChatPanelTest {
         void can_converse_with_non_streaming_api_too(AssistantType.System type) throws Throwable {
             when(nonStreamingChatModel.stream(any(Prompt.class))).thenThrow(UnsupportedOperationException.class);
             when(nonStreamingChatModel.call(any(Prompt.class)))
-                    .thenReturn(new ChatResponse(List.of(new Generation("something"))));
+                    .thenReturn(new ChatResponse(List.of(new Generation(new AssistantMessage("something")))));
 
             var chatPanel = aChatPanel(type);
             aUserMessage(chatPanel, "Say something");

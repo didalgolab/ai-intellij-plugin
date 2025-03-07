@@ -116,7 +116,7 @@ public class ChatHandler {
 
         private List<Generation> formResponse(ChatResponse response, Generation choice) {
             partialResponseChoices.computeIfAbsent(0, __ -> new StringBuffer())
-                    .append(StringUtils.defaultIfEmpty(choice.getOutput().getContent(), ""));
+                    .append(StringUtils.defaultIfEmpty(choice.getOutput().getText(), ""));
             lastMetadata.put(0, response.getMetadata());
             return toMessages(partialResponseChoices);
         }
@@ -124,7 +124,7 @@ public class ChatHandler {
         private List<Generation> toMessages(SortedMap<Integer, StringBuffer> partialResponseChoices) {
             List<AssistantMessage> responseChoices = new ArrayList<>(partialResponseChoices.size());
             partialResponseChoices.forEach((key, value) -> responseChoices.add(new AssistantMessage(value.toString())));
-            return List.of(new Generation(responseChoices.get(0).getContent()));
+            return List.of(new Generation(new AssistantMessage(responseChoices.get(0).getText())));
         }
     }
 }
