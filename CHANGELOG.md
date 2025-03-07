@@ -1,7 +1,8 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
 ## [Unreleased]
-+ Added support for `Claude 3.7` model
++ Added support for the `Claude 3.7` model
++ Users can now adjust the reasoning effort used by OpenAI reasoning models via a new setting.
 
 ## [1.2.0]
 + Renamed plugin name from `ChatGPT Integration` to `AI Integration`

@@ -164,6 +164,29 @@
             </constraints>
             <properties/>
           </component>
+          <component id="b81c5" class="javax.swing.JLabel" binding="reasoningEffortLabel">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="Reasoning Effort:"/>
+              <toolTipText value="Constrains effort on reasoning for reasoning models (o1 and o3-mini only)"/>
+            </properties>
+          </component>
+          <component id="cf20a" class="javax.swing.JComboBox" binding="reasoningEffortComboBox">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="low"/>
+                <item value="medium"/>
+                <item value="high"/>
+              </model>
+            </properties>
+          </component>
           <component id="a56c2" class="javax.swing.JButton" binding="refreshModelsButton" custom-create="true">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>

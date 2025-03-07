@@ -25,6 +25,10 @@ public interface ModelType {
     default boolean supportsSystemMessage() {
         return true;
     }
+    
+    default boolean supportsReasoningEffort() {
+        return false;
+    }
 
     default ChatOptions incompatibleChatOptionsOverride() {
         return OVERRIDE_NONE;

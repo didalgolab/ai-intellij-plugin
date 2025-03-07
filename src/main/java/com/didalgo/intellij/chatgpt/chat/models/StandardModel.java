@@ -45,20 +45,21 @@ public enum StandardModel implements ModelType {
     GPT_4_1106_PREVIEW("gpt-4-1106-preview", ModelFamily.OPEN_AI, 128000),
     GPT_4_0125_PREVIEW("gpt-4-0125-preview", ModelFamily.OPEN_AI, 128000),
 
-    O3_MINI("o3-mini", ModelFamily.OPEN_AI, 200000, false, false, IncompatibleChatOptions.O1_OVERRIDE),
-    O3_MINI_2025_01_31("o3-mini-2025-01-31", ModelFamily.OPEN_AI, 200000, false, false, IncompatibleChatOptions.O1_OVERRIDE),
-    O1("o1", ModelFamily.OPEN_AI, 200000, false, false, IncompatibleChatOptions.O1_OVERRIDE),
-    O1_2024_12_17("o1-2024-12-17", ModelFamily.OPEN_AI, 200000, false, false, IncompatibleChatOptions.O1_OVERRIDE),
-    O1_MINI("o1-mini", ModelFamily.OPEN_AI, 128000, false, false, IncompatibleChatOptions.O1_OVERRIDE),
-    O1_MINI_2024_09_12("o1-mini-2024-09-12", ModelFamily.OPEN_AI, 128000, false, false, IncompatibleChatOptions.O1_OVERRIDE),
-    O1_PREVIEW("o1-preview", ModelFamily.OPEN_AI, 128000, false, false, IncompatibleChatOptions.O1_OVERRIDE),
-    O1_PREVIEW_2024_09_12("o1-preview-2024-09-12", ModelFamily.OPEN_AI, 128000, false, false, IncompatibleChatOptions.O1_OVERRIDE);
+    O3_MINI("o3-mini", ModelFamily.OPEN_AI, 200000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE),
+    O3_MINI_2025_01_31("o3-mini-2025-01-31", ModelFamily.OPEN_AI, 200000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE),
+    O1("o1", ModelFamily.OPEN_AI, 200000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE),
+    O1_2024_12_17("o1-2024-12-17", ModelFamily.OPEN_AI, 200000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE),
+    O1_MINI("o1-mini", ModelFamily.OPEN_AI, 128000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE),
+    O1_MINI_2024_09_12("o1-mini-2024-09-12", ModelFamily.OPEN_AI, 128000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE),
+    O1_PREVIEW("o1-preview", ModelFamily.OPEN_AI, 128000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE),
+    O1_PREVIEW_2024_09_12("o1-preview-2024-09-12", ModelFamily.OPEN_AI, 128000, false, false, true, IncompatibleChatOptions.O1_OVERRIDE);
 
     private final ModelFamily family;
     private final String id;
     private final int inputTokenLimit;
     private final boolean supportsStreaming;
     private final boolean supportsSystemMessage;
+    private final boolean supportsReasoningEffort;
     private final ChatOptions incompatibleChatOptionsOverride;
 
     StandardModel(String id, ModelFamily family, int inputTokenLimit) {
@@ -66,11 +67,16 @@ public enum StandardModel implements ModelType {
     }
 
     StandardModel(String id, ModelFamily family, int inputTokenLimit, boolean supportsStreaming, boolean supportsSystemMessage, ChatOptions incompatibleChatOptionsOverride) {
+        this(id, family, inputTokenLimit, supportsStreaming, supportsSystemMessage, false, incompatibleChatOptionsOverride);
+    }
+
+    StandardModel(String id, ModelFamily family, int inputTokenLimit, boolean supportsStreaming, boolean supportsSystemMessage, boolean supportsReasoningEffort, ChatOptions incompatibleChatOptionsOverride) {
         this.id = id;
         this.family = family;
         this.inputTokenLimit = inputTokenLimit;
         this.supportsStreaming = supportsStreaming;
         this.supportsSystemMessage = supportsSystemMessage;
+        this.supportsReasoningEffort = supportsReasoningEffort;
         this.incompatibleChatOptionsOverride = incompatibleChatOptionsOverride;
     }
 
@@ -97,6 +103,11 @@ public enum StandardModel implements ModelType {
     @Override
     public boolean supportsSystemMessage() {
         return supportsSystemMessage;
+    }
+    
+    @Override
+    public boolean supportsReasoningEffort() {
+        return supportsReasoningEffort;
     }
 
     @Override

@@ -25,6 +25,7 @@ public class OpenAiModelFamily implements ModelFamily {
                 .streamUsage(config.isEnableStreamOptions())
                 .topP(config.getTopP())
                 .N(1)
+                .reasoningEffort(config.isReasoningEffortEnabled() ? config.getReasoningEffort() : null)
                 .build();
         return new OpenAiChatModel(api, options);
     }

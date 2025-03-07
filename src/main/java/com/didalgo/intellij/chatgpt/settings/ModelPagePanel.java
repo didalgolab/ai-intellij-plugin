@@ -69,6 +69,8 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
     private JPanel customizeServerLabel;
     private JButton testConnectionButton;
     private JButton refreshModelsButton;
+    private JComboBox<String> reasoningEffortComboBox;
+    private JLabel reasoningEffortLabel;
 
     private final AssistantType type;
     private final Predicate<ModelType> modelFilter;
@@ -100,6 +102,11 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
         topPSpinner.setModel(new SpinnerNumberModel(0.95, 0.0, 1.0, 0.01));
         comboCombobox.setEditable(isModelNameEditable());
         comboCombobox.removeAllItems();
+        comboCombobox.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                updateReasoningEffortVisibility();
+            }
+        });
         testConnectionButton.addActionListener(this::testConnection);
         initHelp();
         configureAzureServerOptions(isAzureCompatible());
@@ -108,6 +115,28 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
         }
         if (!isStreamOptionsApiAvailable()) {
             removeComponent(enableStreamOptionsCheckBox);
+        }
+        updateReasoningEffortVisibility();
+    }
+    
+    private void updateReasoningEffortVisibility() {
+        var selectedItem = comboCombobox.getSelectedItem();
+        var selectedModel = selectedItem != null ? selectedItem.toString() : "";
+        var supportsReasoningEffort = supportsReasoningEffort(selectedModel);
+
+        reasoningEffortLabel.setVisible(supportsReasoningEffort);
+        reasoningEffortComboBox.setVisible(supportsReasoningEffort);
+        reasoningEffortComboBox.setEnabled(supportsReasoningEffort);
+    }
+
+    private boolean supportsReasoningEffort(String selectedModel) {
+        try {
+            ModelType modelType = StandardModel.of(selectedModel);
+            return modelType.supportsReasoningEffort();
+        } catch (IllegalArgumentException e) {
+            // For custom models, check by name as fallback
+            return selectedModel.startsWith("o3")
+                    || selectedModel.startsWith("o1") && !selectedModel.startsWith("o1-mini") && !selectedModel.startsWith("o1-preview");
         }
     }
 
@@ -228,6 +257,7 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
             if (comboCombobox.getSelectedIndex() == -1) {
                 comboCombobox.setSelectedIndex(0);
             }
+            updateReasoningEffortVisibility();
         }
     }
 
@@ -275,6 +305,8 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
         customizeServerField.setText(config.getApiEndpointUrl());
         azureApiEndpointField.setText(config.getAzureApiEndpoint());
         azureDeploymentNameField.setText(config.getAzureDeploymentName());
+        reasoningEffortComboBox.setSelectedItem(config.getReasoningEffort());
+        updateReasoningEffortVisibility();
     }
 
     @Override
@@ -291,6 +323,7 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
                 !config.getModelName().equals(comboCombobox.getSelectedItem()) ||
                 !Double.valueOf(config.getTemperature()).equals(temperatureSpinner.getValue()) ||
                 !Double.valueOf(config.getTopP()).equals(topPSpinner.getValue()) ||
+                !config.getReasoningEffort().equals(reasoningEffortComboBox.getSelectedItem()) ||
                 config.isEnableStreamResponse() != enableStreamResponseCheckBox.isSelected() ||
                 config.isEnableStreamOptions() != enableStreamOptionsCheckBox.isSelected() ||
                 config.isEnableCustomApiEndpointUrl() != enableCustomizeUrlCheckBox.isSelected() ||
@@ -319,6 +352,8 @@ public abstract class ModelPagePanel implements Configurable, Configurable.Compo
         config.setModelName(comboCombobox.getSelectedItem().toString());
         config.setTemperature((double) temperatureSpinner.getValue());
         config.setTopP((double) topPSpinner.getValue());
+        config.setReasoningEffort((String) reasoningEffortComboBox.getSelectedItem());
+        config.setReasoningEffortEnabled(reasoningEffortComboBox.isEnabled());
         config.setEnableStreamResponse(enableStreamResponseCheckBox.isSelected());
         config.setEnableStreamOptions(enableStreamOptionsCheckBox.isSelected());
         config.setEnableCustomApiEndpointUrl(enableCustomizeUrlCheckBox.isSelected());

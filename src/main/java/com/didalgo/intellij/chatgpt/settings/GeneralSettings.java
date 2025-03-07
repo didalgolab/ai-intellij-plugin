@@ -145,6 +145,8 @@ public class GeneralSettings implements PersistentStateComponent<GeneralSettings
         private volatile String apiKeyMasked = "";
         private volatile double temperature = 0.4;
         private volatile double topP = 0.95;
+        private volatile String reasoningEffort = "medium";
+        private volatile boolean reasoningEffortEnabled;
         @Deprecated(forRemoval = true)
         private volatile boolean enableContext = true;
         private volatile boolean enableTokenConsumption = true;
@@ -197,6 +199,8 @@ public class GeneralSettings implements PersistentStateComponent<GeneralSettings
                     apiKeyMasked,
                     temperature,
                     topP,
+                    reasoningEffort,
+                    reasoningEffortEnabled,
                     enableTokenConsumption,
                     enableStreamResponse,
                     enableStreamOptions,
@@ -216,6 +220,8 @@ public class GeneralSettings implements PersistentStateComponent<GeneralSettings
                         && Objects.equals(apiKeyMasked, that.apiKeyMasked)
                         && Objects.equals(temperature, that.temperature)
                         && Objects.equals(topP, that.topP)
+                        && Objects.equals(reasoningEffort, that.reasoningEffort)
+                        && Objects.equals(reasoningEffortEnabled, that.reasoningEffortEnabled)
                         && Objects.equals(enableTokenConsumption, that.enableTokenConsumption)
                         && Objects.equals(enableStreamResponse, that.enableStreamResponse)
                         && Objects.equals(enableStreamOptions, that.enableStreamOptions)
