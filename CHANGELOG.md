@@ -3,6 +3,7 @@
 ## [Unreleased]
 + Added support for the `Claude 3.7` model
 + Users can now adjust the reasoning effort used by OpenAI reasoning models via a new setting.
++ Claude models now support the handy `Refresh Models` feature in the settings
 
 ## [1.2.0]
 + Renamed plugin name from `ChatGPT Integration` to `AI Integration`

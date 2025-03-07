@@ -83,6 +83,9 @@ public final class ModelCatalogApi {
 			if (apiKey != null) {
 				if (family == ModelFamily.GEMINI) {
 					headers.add("x-goog-api-key", apiKey);
+				} else if (family == ModelFamily.ANTHROPIC) {
+					headers.add("x-api-key", apiKey);
+					headers.add("anthropic-version", "2023-06-01");
 				} else {
 					headers.setBearerAuth(apiKey);
 				}

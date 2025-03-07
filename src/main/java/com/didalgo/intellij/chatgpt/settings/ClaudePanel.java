@@ -27,11 +27,6 @@ public class ClaudePanel extends ModelPagePanel implements Configurable {
 
     @Override
     protected boolean isModelCatalogAvailable() {
-        return false;
-    }
-
-    @Override
-    protected boolean isModelNameEditable() {
         return true;
     }
 }
