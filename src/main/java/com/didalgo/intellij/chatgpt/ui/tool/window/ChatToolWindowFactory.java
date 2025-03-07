@@ -74,24 +74,22 @@ public class ChatToolWindowFactory implements ToolWindowFactory, DumbAware {
         GeneralSettings settings = GeneralSettings.getInstance();
         AssistantToolFactory contentFactory = new AssistantToolFactory(project, settings, ContentFactory.getInstance());
 
+        AssistantType.System firstAvailableAssistant = null;
         Map<AssistantType, AssistantTool> contentMap = new ConcurrentHashMap<>();
         for (var type : AssistantType.System.values()) {
             if (!type.isEnabled(settings))
                 continue;
 
             addToolWindowContent(toolWindow, type, contentFactory, contentMap);
+            if (firstAvailableAssistant == null)
+                firstAvailableAssistant = type;
         }
         setContentMap(toolWindow, contentMap);
 
-        // Set the default component. It require the 1st container
-        String activeContent = PropertiesComponent.getInstance().getValue(ACTIVE_CONTENT_KEY, AssistantType.System.GPT_4.name());
-        try {
-            AssistantType.System activeContentKey = AssistantType.System.valueOf(activeContent);
-            var content = contentMap.get(activeContentKey);
-            if (content != null) {
-                project.putUserData(ChatLink.KEY, content.getChatLink());
-            }
-        } catch (Exception ignored) { }
+        // Set the default component. It requires the 1st container
+        if (firstAvailableAssistant != null) {
+            setPreferredAssistant(project, firstAvailableAssistant, contentMap);
+        }
 
         // Add the selection listener
         toolWindow.addContentManagerListener(new ContentManagerListener() {
@@ -123,6 +121,18 @@ public class ChatToolWindowFactory implements ToolWindowFactory, DumbAware {
             }
         });
         toolWindow.setTitleActions(actionList);
+    }
+
+    private static void setPreferredAssistant(@NotNull Project project, AssistantType.System firstAssistant, Map<AssistantType, AssistantTool> contentMap) {
+        String activeContent = PropertiesComponent.getInstance().getValue(ACTIVE_CONTENT_KEY, firstAssistant.name());
+        try {
+            AssistantType.System activeContentKey = AssistantType.System.valueOf(activeContent);
+            var content = contentMap.get(activeContentKey);
+            if (content != null) {
+                project.putUserData(ChatLink.KEY, content.getChatLink());
+            }
+        } catch (Exception ignored) {
+        }
     }
 
     private static class AssistantToolFactory {
