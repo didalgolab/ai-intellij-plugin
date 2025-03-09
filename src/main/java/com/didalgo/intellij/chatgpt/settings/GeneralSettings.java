@@ -51,7 +51,8 @@ public class GeneralSettings implements PersistentStateComponent<GeneralSettings
 
     public static final String BASE_PROMPT = "You are a professional software engineer." +
             " Follow these rules in each response: snarky & noir & lang:${{LANG}}." +
-            " Source code language: en. Bias towards the best solution.";
+            " Source code language: en. Bias towards the best solution." +
+            " Always enclose code within triple backticks (```)";
 
     public static final List<AssistantType.System> DEFAULT_ENABLED_SYSTEMS
             = List.of(GPT_4, GPT_3_5);
