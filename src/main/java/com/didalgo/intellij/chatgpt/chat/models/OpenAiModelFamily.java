@@ -9,6 +9,7 @@ import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.openai.api.common.OpenAiApiConstants;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 
@@ -18,7 +19,6 @@ public class OpenAiModelFamily implements ModelFamily {
     public OpenAiChatModel createChatModel(GeneralSettings.AssistantOptions config) {
         var baseUrl = config.isEnableCustomApiEndpointUrl()? config.getApiEndpointUrl(): getDefaultApiEndpointUrl();
         var apiKey = config.getApiKey();
-        var api = new OpenAiApi(baseUrl, apiKey);
         var options = OpenAiChatOptions.builder()
                 .model(config.getModelName())
                 .temperature(config.getTemperature())
@@ -27,7 +27,15 @@ public class OpenAiModelFamily implements ModelFamily {
                 .N(1)
                 .reasoningEffort(config.isReasoningEffortEnabled() ? config.getReasoningEffort() : null)
                 .build();
-        return new OpenAiChatModel(api, options);
+
+        return OpenAiChatModel.builder()
+                .defaultOptions(options)
+                .openAiApi(OpenAiApi.builder()
+                        .baseUrl(baseUrl)
+                        .apiKey(apiKey)
+                        .restClientBuilder(RestClient.builder().apply(ModelFamily.defaultTimeout()))
+                        .build())
+                .build();
     }
 
     @Override
