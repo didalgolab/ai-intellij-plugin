@@ -11,13 +11,15 @@ import org.springframework.ai.openai.api.OpenAiApi;
 
 public class GeminiModelFamily implements ModelFamily {
 
-    private static final String DEFAULT_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai";
+    public static final String STANDARD_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
+
+    public static final String OPENAI_COMPATIBLE_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai";
 
     @Override
     public OpenAiChatModel createChatModel(GeneralSettings.AssistantOptions config) {
         var baseUrl = config.isEnableCustomApiEndpointUrl()? config.getApiEndpointUrl(): getDefaultApiEndpointUrl();
         if ("https://generativelanguage.googleapis.com".equals(baseUrl)) {
-            baseUrl = DEFAULT_BASE_URL;
+            baseUrl = OPENAI_COMPATIBLE_BASE_URL;
         }
 
         var api = OpenAiApi.builder()
@@ -38,7 +40,7 @@ public class GeminiModelFamily implements ModelFamily {
 
     @Override
     public String getDefaultApiEndpointUrl() {
-        return DEFAULT_BASE_URL;
+        return OPENAI_COMPATIBLE_BASE_URL;
     }
 
     @Override

@@ -12,6 +12,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 import com.didalgo.intellij.chatgpt.chat.models.CustomModel;
+import com.didalgo.intellij.chatgpt.chat.models.GeminiModelFamily;
 import com.didalgo.intellij.chatgpt.chat.models.ModelFamily;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -66,7 +67,8 @@ public final class ModelCatalogApi {
 	private Function<UriBuilder, URI> getApiEndpointSpec(ModelFamily family) {
 		String path;
 		if (family == ModelFamily.GEMINI) {
-			path = "/v1beta/models";
+			//path = "/v1beta/models";
+			return __ -> URI.create(GeminiModelFamily.STANDARD_BASE_URL + "/models");
 		} else if (family == ModelFamily.OLLAMA) {
 			path = "/api/tags";
 		} else {
